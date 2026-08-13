@@ -1,9 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
+// supabase.js
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
 
-// Las variables de entorno se configuran en Vercel (Project Settings → Environment Variables)
-// SUPABASE_URL = https://TU-PROJECT.supabase.co
-// SUPABASE_KEY = TU-API-KEY
-
+// Usa las variables de entorno en Vercel
 export const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
