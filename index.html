@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rifa Chontico</title>
+  <style>
+    .grid { display: grid; grid-template-columns: repeat(20, 40px); gap: 5px; }
+    .puesto { width: 40px; height: 40px; text-align: center; cursor: pointer; }
+    .disponible { background: green; color: white; }
+    .vendido { background: red; color: white; }
+  </style>
+</head>
+<body>
+  <h1>Rifa Chontico</h1>
+  <form id="compradorForm">
+    <input type="text" id="nombre" placeholder="Nombre" required>
+    <input type="text" id="cedula" placeholder="Cédula" required>
+    <input type="text" id="telefono" placeholder="Teléfono" required>
+    <button type="submit">Comprar 10 puestos</button>
+  </form>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const grid = document.getElementById("grid");
+    const puestos = Array(1000).fill("disponible"); // estado inicial
+
+    // Renderizar la cuadrícula
+    puestos.forEach((estado, i) => {
+      const div = document.createElement("div");
+      div.textContent = i.toString().padStart(3, "0");
+      div.className = "puesto " + estado;
+      div.onclick = () => seleccionar(div, i);
+      grid.appendChild(div);
+    });
+
+    let seleccionados = [];
+
+    function seleccionar(div, i) {
+      if (puestos[i] === "vendido") return;
+      if (seleccionados.includes(i)) {
+        seleccionados = seleccionados.filter(x => x !== i);
+        div.className = "puesto disponible";
+      } else {
+        if (seleccionados.length >= 10) {
+          alert("Solo puedes seleccionar 10 puestos");
+          return;
+        }
+        seleccionados.push(i);
+        div.className = "puesto vendido";
+      }
+    }
+
+    document.getElementById("compradorForm").onsubmit = e => {
+      e.preventDefault();
+      if (seleccionados.length !== 10) {
+        alert("Debes seleccionar exactamente 10 puestos");
+        return;
+      }
+      const comprador = {
+        nombre: document.getElementById("nombre").value,
+        cedula: document.getElementById("cedula").value,
+        telefono: document.getElementById("telefono").value,
+        puestos: seleccionados
+      };
+      console.log("Comprador registrado:", comprador);
+      // Aquí puedes guardar en Firebase o LocalStorage
+      seleccionados = [];
+    };
+  </script>
+</body>
+</html>
