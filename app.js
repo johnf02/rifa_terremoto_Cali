@@ -3,8 +3,13 @@ import { supabase } from './supabase.js'
 const grid = document.getElementById("grid")
 let seleccionados = []
 
+// Cargar puestos desde Supabase
 async function cargarPuestos() {
-  const { data } = await supabase.from('puestos').select()
+  const { data, error } = await supabase.from('puestos').select()
+  if (error) {
+    console.error(error)
+    return
+  }
   grid.innerHTML = ""
   data.forEach(p => {
     const div = document.createElement("div")
@@ -36,15 +41,41 @@ document.getElementById("compradorForm").onsubmit = async e => {
     alert("Debes seleccionar exactamente 10 puestos")
     return
   }
+
+  // Insertar comprador en Supabase
   const comprador = {
     nombre: document.getElementById("nombre").value,
     cedula: document.getElementById("cedula").value,
     telefono: document.getElementById("telefono").value
   }
-  const { data: nuevo } = await supabase.from('compradores').insert(comprador).select().single()
-  await supabase.from('puestos').update({ estado: 'vendido', comprador_id: nuevo.id }).in('numero', seleccionados)
+
+  const { data: nuevo, error } = await supabase
+    .from('compradores')
+    .insert(comprador)
+    .select()
+    .single()
+
+  if (error) {
+    console.error(error)
+    alert("Error guardando comprador")
+    return
+  }
+
+  // Actualizar puestos vendidos
+  const { error: errorPuestos } = await supabase
+    .from('puestos')
+    .update({ estado: 'vendido', comprador_id: nuevo.id })
+    .in('numero', seleccionados)
+
+  if (errorPuestos) {
+    console.error(errorPuestos)
+    alert("Error guardando puestos")
+    return
+  }
+
   seleccionados = []
   cargarPuestos()
 }
 
+// Inicializar
 cargarPuestos()
