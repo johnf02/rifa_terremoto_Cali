@@ -38,7 +38,7 @@ button:hover {
 /* Cuadrícula de puestos */
 .grid {
   display: grid;
-  grid-template-columns: repeat(20, 40px);
+  grid-template-columns: repeat(20, 40px); /* 20 columnas para 1000 puestos */
   gap: 5px;
   justify-content: center;
 }
@@ -60,4 +60,11 @@ button:hover {
 
 /* Estados */
 .disponible {
-  background
+  background: green;
+  color: white;
+}
+
+.vendido {
+  background: red;
+  color: white;
+}
