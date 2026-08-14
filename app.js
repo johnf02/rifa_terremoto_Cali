@@ -5,11 +5,16 @@ let seleccionados = []
 
 // Cargar puestos desde Supabase
 async function cargarPuestos() {
-  const { data, error } = await supabase.from('puestos').select()
+  const { data, error } = await supabase
+    .from('puestos')
+    .select()
+    .order('numero', { ascending: true })   // 👈 aquí está la clave
+
   if (error) {
     console.error(error)
     return
   }
+
   grid.innerHTML = ""
   data.forEach(p => {
     const div = document.createElement("div")
