@@ -76,6 +76,8 @@ document.getElementById("compradorForm").onsubmit = async e => {
     console.error(errorPuestos)
     alert("Error guardando puestos")
     return
+  } else {
+    alert("Proceso realizado correctamente")
   }
 
   seleccionados = []
