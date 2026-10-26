@@ -31,8 +31,8 @@ function seleccionar(div, numero, estado) {
     seleccionados = seleccionados.filter(x => x !== numero)
     div.className = "puesto disponible"
   } else {
-    if (seleccionados.length >= 10) {
-      alert("Solo puedes seleccionar 10 puestos")
+    if (seleccionados.length >= 1) {
+      alert("Solo puedes seleccionar 1 puesto")
       return
     }
     seleccionados.push(numero)
@@ -42,8 +42,8 @@ function seleccionar(div, numero, estado) {
 
 document.getElementById("compradorForm").onsubmit = async e => {
   e.preventDefault()
-  if (seleccionados.length !== 10) {
-    alert("Debes seleccionar exactamente 10 puestos")
+  if (seleccionados.length !== 1) {
+    alert("Debes seleccionar exactamente 1 puesto")
     return
   }
 
