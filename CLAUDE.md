@@ -24,7 +24,7 @@ El navegador habla directamente con Supabase — no hay backend propio. `supabas
 
 Dos tablas, inferidas de las consultas en `app.js`:
 
-- `puestos` — `numero` (int, se muestra con padding a 3 dígitos), `estado`, `comprador_id` FK
+- `puestos` — `numero` (int, 00–99, se muestra con padding a 2 dígitos), `estado`, `comprador_id` FK
 - `compradores` — `id`, `nombre`, `cedula`, `telefono`
 
 ### Acoplamiento a tener en cuenta

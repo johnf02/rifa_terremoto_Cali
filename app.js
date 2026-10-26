@@ -18,7 +18,7 @@ async function cargarPuestos() {
   grid.innerHTML = ""
   data.forEach(p => {
     const div = document.createElement("div")
-    div.textContent = p.numero.toString().padStart(3,"0")
+    div.textContent = p.numero.toString().padStart(2,"0")
     div.className = "puesto " + p.estado
     div.onclick = () => seleccionar(div, p.numero, p.estado)
     grid.appendChild(div)
