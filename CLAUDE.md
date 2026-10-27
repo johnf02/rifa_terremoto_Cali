@@ -31,7 +31,7 @@ Dos tablas, inferidas de las consultas en `app.js`:
 
 Los valores de `estado` se usan directamente como nombres de clase CSS: `div.className = "puesto " + p.estado` en `app.js` se combina con `.disponible` / `.vendido` en `style.css`. Agregar un nuevo estado en la base de datos requiere una clase CSS correspondiente, o esos puestos se renderizan sin estilo.
 
-La selección del lado del cliente también reutiliza la clase `vendido`, por lo que un puesto que el usuario apenas seleccionó es visualmente indistinguible de uno ya vendido hasta que `cargarPuestos()` recarga desde la base de datos.
+La selección del lado del cliente usa la clase `seleccionado` (amarillo, pendiente de confirmar), que no es un `estado` de la BD. Solo puede haber un puesto seleccionado: tocar otro disponible devuelve el anterior a verde, y tocar el mismo lo deselecciona.
 
 ### Flujo de compra
 

@@ -68,3 +68,9 @@ button:hover {
   background: red;
   color: white;
 }
+
+/* Selección del usuario, pendiente de confirmar */
+.seleccionado {
+  background: gold;
+  color: black;
+}

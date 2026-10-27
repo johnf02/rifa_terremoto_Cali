@@ -2,6 +2,7 @@ import { supabase } from './supabase.js'
 
 const grid = document.getElementById("grid")
 let seleccionados = []
+let divSeleccionado = null
 
 // Cargar puestos desde Supabase
 async function cargarPuestos() {
@@ -16,6 +17,7 @@ async function cargarPuestos() {
   }
 
   grid.innerHTML = ""
+  divSeleccionado = null
   data.forEach(p => {
     const div = document.createElement("div")
     div.textContent = p.numero.toString().padStart(2,"0")
@@ -27,17 +29,20 @@ async function cargarPuestos() {
 
 function seleccionar(div, numero, estado) {
   if (estado === "vendido") return
-  if (seleccionados.includes(numero)) {
-    seleccionados = seleccionados.filter(x => x !== numero)
-    div.className = "puesto disponible"
-  } else {
-    if (seleccionados.length >= 1) {
-      alert("Solo puedes seleccionar 1 puesto")
-      return
-    }
-    seleccionados.push(numero)
-    div.className = "puesto vendido"
+
+  // Devolver a verde el puesto seleccionado anteriormente
+  if (divSeleccionado) divSeleccionado.className = "puesto disponible"
+
+  // Tocar el mismo puesto lo deselecciona
+  if (divSeleccionado === div) {
+    divSeleccionado = null
+    seleccionados = []
+    return
   }
+
+  divSeleccionado = div
+  seleccionados = [numero]
+  div.className = "puesto seleccionado"
 }
 
 document.getElementById("compradorForm").onsubmit = async e => {
